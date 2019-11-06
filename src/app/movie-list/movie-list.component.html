@@ -1,0 +1,45 @@
+<app-movie-search (addMovieEventEmitter)="addMovieEventListener($event)"></app-movie-search>
+
+<button mat-stroked-button color="accent" (click)="removeSelectedRows()">
+  Remove Selected Rows
+</button>
+
+<table #moviesTable mat-table [dataSource]="movies" class="mat-elevation-z1">
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+        (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Title">
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Year">
+    <th mat-header-cell *matHeaderCellDef>Year</th>
+    <td mat-cell *matCellDef="let element"> {{element.Year}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="imdbID">
+    <th mat-header-cell *matHeaderCellDef>imdbID</th>
+    <td mat-cell *matCellDef="let element"> {{element.imdbID}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Type">
+    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <td mat-cell *matCellDef="let element"> {{element.Type}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row routerLink="/movie/{{row.imdbID}}" *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -1,0 +1,12 @@
+<mat-form-field class="example-full-width">
+  <input matInput type="text" placeholder="Search" [formControl]="searchTerm" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete"
+    autoActiveFirstOption="true"
+    (optionSelected)="addMovie($event.option.value)">
+    <mat-option *ngFor="let movie of searchResults" [value]="movie.imdbID">
+      <img class="example-option-img" aria-hidden [src]="movie.Poster" height="25">
+      <span>{{movie.Title}}</span> |
+      <small>Year: {{movie.Year}}</small>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
